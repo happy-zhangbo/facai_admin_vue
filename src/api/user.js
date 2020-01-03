@@ -5,7 +5,7 @@ export function login(data) {
     url: '/login',
     method: 'post',
     headers:{
-     "content-type": "application/x-www-form-urlencoded",
+      "content-type": "application/x-www-form-urlencoded",
     },
     data
   })
