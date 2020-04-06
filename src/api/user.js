@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/login',
+    url: 'api/login',
     method: 'post',
     emulateJSON: true,
     data
@@ -25,10 +25,10 @@ export function logout() {
 }
 
 
-export function getUserList(token) {
+export function getUserList(data) {
   return request({
-    url: '/user/list',
-    method: 'get',
-    params: { token }
+    url: '/api/user/list',
+    method: 'post',
+    data
   })
 }

@@ -33,10 +33,10 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        console.log(data);
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        const { Data } = response
+        console.log(Data);
+        commit('SET_TOKEN', Data.Token)
+        setToken("Bearer "+Data.Token)
         resolve()
       }).catch(error => {
         console.log(error);
@@ -48,21 +48,26 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
+      var data = { "name" : "张博" , "avatar" : "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"}
+      const { name, avatar } = data
+      commit('SET_NAME', name)
+      commit('SET_AVATAR', avatar)
+      resolve(data)
+      // getInfo(state.token).then(response => {
+      //   const { data } = response
 
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
+      //   if (!data) {
+      //     reject('Verification failed, please Login again.')
+      //   }
 
-        const { name, avatar } = data
+      //   const { name, avatar } = data
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
+      //   commit('SET_NAME', name)
+      //   commit('SET_AVATAR', avatar)
+      //   resolve(data)
+      // }).catch(error => {
+      //   reject(error)
+      // })
     })
   },
 

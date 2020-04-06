@@ -2,12 +2,17 @@
   <el-table :data="list" style="width: 100%;padding-top: 15px;">
     <el-table-column label="昵称" min-width="200">
       <template slot-scope="scope">
-        {{ scope.row.uNickname | orderNoFilter }}
+        {{ scope.row.UNickname | orderNoFilter }}
       </template>
     </el-table-column>
     <el-table-column label="头像" min-width="200">
       <template slot-scope="scope">
-        <img :src="scope.row.uAvatar" class="emptyGif">
+        <img :src="scope.row.UAvatar" class="emptyGif">
+      </template>
+    </el-table-column>
+    <el-table-column label="注册时间" min-width="200">
+      <template slot-scope="scope">
+        {{ scope.row.UCreatetime }}
       </template>
     </el-table-column>
     <!-- <el-table-column label="Price" width="195" align="center">
@@ -51,9 +56,10 @@ export default {
   },
   methods: {
     fetchData() {
-      getUserList().then(response => {
+      var param = { 'page': 1, 'size': 10 }
+      getUserList(param).then(response => {
         console.log(response)
-        this.list = response.data.slice(0, 8)
+        this.list = response.Data.Users
       })
     }
   }

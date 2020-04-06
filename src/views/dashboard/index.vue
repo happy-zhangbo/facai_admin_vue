@@ -1,12 +1,12 @@
 <template>
   <div class="dashboard-editor-container">
-    <github-corner class="github-corner" />
+    <!-- <github-corner class="github-corner" /> -->
 
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <!-- <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
-    </el-row>
+    </el-row> -->
 
     <!-- <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
@@ -37,10 +37,14 @@
         <box-card />
       </el-col>
     </el-row> -->
-
+    <el-row style="background:#fff;">
+      <order-table />
+    </el-row>
+    <br />
     <el-row style="background:#fff;">
       <user-table />
     </el-row>
+
   </div>
 </template>
 
@@ -48,13 +52,8 @@
 import GithubCorner from '@/components/GithubCorner'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
-import RaddarChart from './components/RaddarChart'
-import PieChart from './components/PieChart'
-import BarChart from './components/BarChart'
-import TransactionTable from './components/TransactionTable'
 import UserTable from './components/UserTable'
-import TodoList from './components/TodoList'
-import BoxCard from './components/BoxCard'
+import OrderTable from './components/OrderTable'
 
 const lineChartData = {
   newVisitis: {
@@ -81,13 +80,8 @@ export default {
     GithubCorner,
     PanelGroup,
     LineChart,
-    RaddarChart,
-    PieChart,
-    BarChart,
-    TransactionTable,
     UserTable,
-    TodoList,
-    BoxCard
+    OrderTable
   },
   data() {
     return {

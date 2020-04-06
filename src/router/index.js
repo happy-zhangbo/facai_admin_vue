@@ -51,10 +51,44 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '控制台', icon: 'dashboard' }
     }]
   },
-
+  {
+    path: '/product',
+    component: Layout,
+    redirect: '/product/list',
+    name: 'Product',
+    meta: { title: '产品维护', icon: 'list' },
+    children: [
+      {
+        path: 'list',
+        name: 'Product',
+        component: () => import('@/views/product/product/index'),
+        meta: { title: '产品列表', icon: 'table' }
+      },
+      {
+        path: 'createProduct',
+        name: 'Add',
+        hidden: true,
+        component: () => import('@/views/product/product/add'),
+        meta: { title: '添加产品', icon: 'edit' }
+      },
+      {
+        path: 'editProduct/:id(\\d+)',
+        name: 'Edit',
+        hidden: true,
+        component: () => import('@/views/product/product/edit'),
+        meta: { title: '编辑产品', icon: 'edit' }
+      },
+      {
+        path: 'productType',
+        name: 'ProductType',
+        component: () => import('@/views/product/productType/index'),
+        meta: { title: '类别维护', icon: 'tree' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,
