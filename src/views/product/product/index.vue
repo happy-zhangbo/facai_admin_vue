@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" v-loading="loading">
     <router-link :to="'/product/createProduct'">
       <el-button type="primary" style="margin-bottom: 1.25rem;" icon="el-icon-plus">添加新产品</el-button>
     </router-link>
@@ -53,11 +53,11 @@
               编辑
             </el-button>
           </router-link>
-          <router-link :to="'/example/edit/'+scope.row.PID">
-            <el-button type="danger" size="small" icon="el-icon-delete">
-              下架
-            </el-button>
-          </router-link>
+
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="delProduct(scope.row,scope.$index)">
+            删除  
+          </el-button>
+
         </template>
       </el-table-column>
     </el-table>
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { getProductList } from '@/api/product'
+import { getProductList, delProduct } from '@/api/product'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -91,7 +91,8 @@ export default {
       listQuery: {
         page: 1,
         size: 10
-      }
+      },
+      loading:false
     }
   },
   created() {
@@ -104,6 +105,13 @@ export default {
         this.list = response.Data.Product
         this.total = response.Data.Total
         this.listLoading = false
+      })
+    },
+    delProduct(row, index) {
+      this.loading = true
+      delProduct({ 'id': row.PID }).then(res => {
+        this.list.splice(index, 1)
+        this.loading = false
       })
     }
   }

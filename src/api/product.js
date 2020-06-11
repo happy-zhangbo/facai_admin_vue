@@ -24,3 +24,44 @@ export function getProduct(data) {
     data
   })
 }
+
+export function saveProduct(data) {
+  return request({
+    url: '/api/product/save',
+    method: 'post',
+    data
+  })
+}
+
+export function delProduct(data) {
+  return request({
+    url: '/api/product/del',
+    method: 'post',
+    data
+  })
+}
+
+
+export function getProductTypeList(data) {
+  return request({
+    url: '/api/product/typelist',
+    method: 'post',
+    data
+  })
+}
+
+export function getProductType(data) {
+  return request({
+    url: '/api/product/typeget',
+    method: 'post',
+    data
+  })
+}
+
+export function saveProductType(data) {
+  return request({
+    url: '/api/product/typesave',
+    method: 'post',
+    data
+  })
+}
