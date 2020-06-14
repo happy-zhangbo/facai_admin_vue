@@ -5,6 +5,7 @@
     </el-button>
     <el-dialog :visible.sync="dialogVisible">
       <el-upload
+        :data="dataObj"
         :multiple="true"
         :file-list="fileList"
         :show-file-list="true"
@@ -12,7 +13,7 @@
         :on-success="handleSuccess"
         :before-upload="beforeUpload"
         class="editor-slide-upload"
-        action="https://httpbin.org/post"
+        action="http://upload-z2.qiniup.com"
         list-type="picture-card"
       >
         <el-button size="small" type="primary">
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-// import { getToken } from 'api/qiniu'
+import { getToken } from '@/api/qiniu'
 
 export default {
   name: 'EditorSlideUpload',
@@ -44,7 +45,9 @@ export default {
     return {
       dialogVisible: false,
       listObj: {},
-      fileList: []
+      fileList: [],
+      dataObj: { 'token': '' },
+      tempUrl: ''
     }
   },
   methods: {
@@ -63,11 +66,12 @@ export default {
       this.dialogVisible = false
     },
     handleSuccess(response, file) {
+      console.log(response)
       const uid = file.uid
       const objKeyArr = Object.keys(this.listObj)
       for (let i = 0, len = objKeyArr.length; i < len; i++) {
         if (this.listObj[objKeyArr[i]].uid === uid) {
-          this.listObj[objKeyArr[i]].url = response.files.file
+          this.listObj[objKeyArr[i]].url = this.tempUrl + '/' + response.key
           this.listObj[objKeyArr[i]].hasSuccess = true
           return
         }
@@ -88,13 +92,30 @@ export default {
       const _URL = window.URL || window.webkitURL
       const fileName = file.uid
       this.listObj[fileName] = {}
+
+
       return new Promise((resolve, reject) => {
-        const img = new Image()
-        img.src = _URL.createObjectURL(file)
-        img.onload = function() {
-          _self.listObj[fileName] = { hasSuccess: false, uid: file.uid, width: this.width, height: this.height }
-        }
-        resolve(true)
+
+        getToken().then(response => {
+          const token = response.Data.Token
+          _self.dataObj.token = token
+          _self.tempUrl = response.Data.Url
+
+          const img = new Image()
+          img.src = _URL.createObjectURL(file)
+          img.onload = function() {
+            _self.listObj[fileName] = { hasSuccess: false, uid: file.uid, width: this.width, height: this.height }
+          }
+          resolve(true)
+
+
+        }).catch(err => {
+          console.log(err)
+          reject(false)
+        })
+
+
+
       })
     }
   }
